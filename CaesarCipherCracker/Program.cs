@@ -44,6 +44,7 @@ namespace CaesarCipherCracker
 
     internal class CaesarCracker : IDisposable
     {
+        private const int ALPHA_LENTH = 26;
         private const string DICT_BASE_URL = "http://www.dict.org/bin/Dict?Form=Dict2&Database=*&Query=";
         private readonly HttpClient _client = new HttpClient();
 
@@ -56,7 +57,7 @@ namespace CaesarCipherCracker
         {
             var solution = new Solution();
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < ALPHA_LENTH; i++)
             {
                 var currentWordSet = GetWordSetFromKey(input, i);
                 await FindActualWords(currentWordSet, solution);
@@ -106,6 +107,7 @@ namespace CaesarCipherCracker
 
     public class Solution
     {
+        private const int ALPHA_LENTH = 26;
         private List<Dictionary<string, bool>> _keySets = new();
         
         public override string ToString()
@@ -118,9 +120,9 @@ namespace CaesarCipherCracker
                     k.Count(s => s.Value))
                 .First());
 
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i < ALPHA_LENTH; i++)
             {
-                sb.Append($"[ ] {i}/25 - ");
+                sb.Append($"[ ] {i}/{ALPHA_LENTH} - ");
                 foreach (var keySet in _keySets[i])
                 {
                     sb.Append(keySet.Key + " ");
